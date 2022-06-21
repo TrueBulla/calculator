@@ -1,6 +1,6 @@
 :root {
     --button-width: 70px;
-    --button-height: 80px;
+    --button-height: 70px;
 }
 * {
     box-sizing: border-box;
@@ -13,6 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+
 }
 .content{
     display: flex;
@@ -72,10 +73,19 @@ body {
 .function:hover{
     background: #fab535;
 }
+.clear-button, .equal-button, .num0{
+    width: 100%;
+}
+.clear-button {
+    grid-column: 1 / span 2;
+
+}
+.equal-button {
+    grid-column: 3 / span 2;
+}
 .num0{
     grid-column: 1 / span 2;
-    grid-row: 5;
-    width: 100%
+    grid-row: 6;
 }
 .footer{
     background: #dcdcdc;
