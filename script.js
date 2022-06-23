@@ -28,12 +28,17 @@ operators.forEach((operator) => {
 clear.addEventListener("click", () => clearScreen());
 //event listener to do the final operation of the series of operations when the equal button is pressed
 equal.addEventListener("click", () => {
-  //call the operate function
-  operate();
-  //clears the displayNumber variable so we can start a new calculation without clearing
-  displayNumber = "";
-  //the text of the calc screen becomes the total
-  screen.textContent = total;
+  //check to make sure a second number was entered, if not show error
+  if (!secondNum) {
+    screen.textContent = "ERR";
+  } else {
+    //call the operate function
+    operate();
+    //clears the displayNumber variable so we can start a new calculation without clearing
+    displayNumber = "";
+    //the text of the calc screen becomes the total
+    screen.textContent = total;
+  }
 });
 
 function addNumbers(number) {
