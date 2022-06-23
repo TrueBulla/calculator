@@ -49,7 +49,7 @@ body {
     align-items: center;
     width: 100%;
     color: white;
-    padding-right: 10px;
+    padding: 10px;
 
 }
 .content-calc_body-button{
@@ -63,14 +63,16 @@ body {
     font-size: 1.25rem;
     margin: 0px;
 }
-.content-calc_body-button:hover:not(.function) {
+.content-calc_body-button:hover:not(.function, .clear-button, .equal-button) {
     background: #bdbdbd;
 }
-.function{
+.function, .clear-button, .equal-button{
     background: #ffa500;
     font-size: 1.5rem;
 }
-.function:hover{
+.function:hover, 
+.clear-button:hover, 
+.equal-button:hover{
     background: #fab535;
 }
 .clear-button, .equal-button, .num0{
@@ -93,4 +95,13 @@ body {
     text-align: center;
     margin-bottom:-10px;
     padding: 20px;
+    position: relative;
+}
+.footer::after{
+    position: absolute;
+    content: "KS";
+    font-size: 26px;
+    right: 15px;
+    bottom: 15px;
+    transform: rotate(-45deg);
 }
