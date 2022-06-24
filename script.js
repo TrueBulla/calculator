@@ -13,6 +13,7 @@ const equal = document.querySelector(".equal-button");
 let firstNum;
 let secondNum;
 let operation;
+let operationTotal;
 let total = 0;
 let displayNumber = "";
 
@@ -24,33 +25,37 @@ numbers.forEach((number) => {
 operators.forEach((operator) => {
   operator.addEventListener("click", () => addOperators(operator));
 });
+
 //event listener to reset all the variables that are used during calculation back to their default values when the clear button is pressed
 clear.addEventListener("click", () => clearScreen());
 //event listener to do the final operation of the series of operations when the equal button is pressed
 equal.addEventListener("click", () => {
-  //check to make sure a second number was entered, if not show error
   if (!secondNum) {
+    clearScreen();
     screen.textContent = "ERR";
   } else {
     //call the operate function
     operate();
-    //clears the displayNumber variable so we can start a new calculation without clearing
-    displayNumber = "";
+    //resets variables to default so we can start a new calc
+    clearScreen();
     //the text of the calc screen becomes the total
     screen.textContent = total;
   }
 });
 
 function addNumbers(number) {
-  //when a number is pressed, add that number to the displayNumber variable
-  displayNumber += number.textContent;
+  if (displayNumber.length < 12) {
+    //when a number is pressed, add that number to the displayNumber variable
+    displayNumber += number.textContent;
+  }
   //if no operation has been chosen yet, assign the display number to the firstNum variable
   if (!operation) {
-    firstNum = parseInt(displayNumber);
+    firstNum = parseFloat(displayNumber);
   } else {
     //if an operation has been chosen, assign the display number to the secondNum variable
-    secondNum = parseInt(displayNumber);
+    secondNum = parseFloat(displayNumber);
   }
+
   //display the displayNumber on the calc screen
   screen.textContent = displayNumber;
 }
@@ -61,6 +66,7 @@ function addOperators(operator) {
   //if both numbers have been chosen, operate on them with the chosen operator
   if (firstNum && secondNum) {
     operate();
+    clearScreen();
     //the total from that operation becomes the firstNum so it can be reused in a string of calculations
     firstNum = total;
     //the total is displayed on the calculator screen
@@ -79,17 +85,29 @@ function clearScreen() {
 }
 //-----MATH FUNCTIONS------
 function sumOperator(a, b) {
-  return a + b;
+  //perform operation on the two numbers
+  operationTotal = a + b;
+  //parse the result to only contain the first 13 characters of the result
+  parsedTotal = parseFloat(operationTotal.toString().substring(0, 14));
+  //return the parsed value
+  return parsedTotal;
 }
+//these functions also work the same as the addition function above
 function subtractOperator(a, b) {
-  return a - b;
+  operationTotal = a - b;
+  parsedTotal = parseFloat(operationTotal.toString().substring(0, 14));
+  return parsedTotal;
 }
 
 function multiplyOperator(a, b) {
-  return a * b;
+  operationTotal = a * b;
+  parsedTotal = parseFloat(operationTotal.toString().substring(0, 14));
+  return parsedTotal;
 }
 function divideOperator(a, b) {
-  return a / b;
+  operationTotal = a / b;
+  parsedTotal = parseFloat(operationTotal.toString().substring(0, 14));
+  return parsedTotal;
 }
 
 //function to operate on the selected numbers
@@ -98,19 +116,20 @@ function operate() {
   switch (operation) {
     case "add":
       total = sumOperator(firstNum, secondNum);
-      console.log(firstNum, secondNum, operation, total);
       break;
     case "subtract":
       total = subtractOperator(firstNum, secondNum);
-      console.log(firstNum, secondNum, operation, total);
       break;
     case "multiply":
       total = multiplyOperator(firstNum, secondNum);
-      console.log(firstNum, secondNum, operation, total);
       break;
     case "divide":
-      total = divideOperator(firstNum, secondNum);
-      console.log(firstNum, secondNum, operation, total);
+      if (!secondNum) {
+        clearScreen();
+        total = "ERR";
+      } else {
+        total = divideOperator(firstNum, secondNum);
+      }
       break;
     default:
       console.log("Oops");
